@@ -1,28 +1,49 @@
 package src.ui;
 
 import javax.swing.*;
+import java.util.Random;
 
 public class gameJFrame extends JFrame {
+    int[][] data = new int[4][4];
+
     public gameJFrame() {
+        initData();
+
         initJFrame();
 
         initJMenuBar();
 
         initImage();
-
+        
         this.setVisible(true);
     }
 
+    private void initData() {
+        int[] tempArr = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
+        Random r = new Random();
+        for (int i = 0; i < tempArr.length; i++) {
+            int index = r.nextInt(tempArr.length);
+            int temp = tempArr[i];
+            tempArr[i] = tempArr[index];
+            tempArr[index] = temp;
+        }
+        for (int i = 0; i < tempArr.length; i++) {
+            data[i / 4][i % 4] = tempArr[i];
+        }
+        System.out.println(data[2][1]);
+    }
+
     private void initImage() {
-        int number = 1;
-        for (int j = 0; j < 4; j++) {
-            for (int i = 0; i < 4; i++) {
-                JLabel jLabel = new JLabel(new ImageIcon("C:\\Users\\82728\\Documents\\GitHub\\Puzzle-Game\\Sucai\\" + number + ".png"));
-                jLabel.setBounds(81 * i, 81 * j, 81, 81);
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                int num = data[i][j];
+                JLabel jLabel = new JLabel(new ImageIcon("C:\\Users\\82728\\Documents\\GitHub\\Puzzle-Game\\Sucai\\" + num + ".png"));
+                jLabel.setBounds(82 * j, 82 * i, 81, 81);
                 this.getContentPane().add(jLabel);
-                number++;
+                //System.out.println(i);
             }
         }
+        System.out.println(data[2][1]);
     }
 
     private void initJMenuBar() {

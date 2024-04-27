@@ -22,6 +22,12 @@ public class gameJFrame extends JFrame implements KeyListener, ActionListener {
             {9, 10, 11, 12},
             {13, 14, 15, 0}
     };
+    int[][] type = {
+            {1, 2, 3, 4},
+            {5, 6, 7, 8},
+            {9, 10, 11, 12},
+            {13, 15, 14, 0}
+    };
     int step = 0;
     JMenuItem replayItem = new JMenuItem("replay the game");
     JMenuItem reloginItem = new JMenuItem("relogin the game");
@@ -67,6 +73,12 @@ public class gameJFrame extends JFrame implements KeyListener, ActionListener {
             winner.setBounds(275, 480, 100, 20);
             System.out.println("you win");
             this.getContentPane().add(winner);
+        }
+        if (nosolution()) {
+            JLabel solution = new JLabel("no solution");
+            solution.setBounds(275, 480, 100, 20);
+            System.out.println("no solution");
+            this.getContentPane().add(solution);
         }
         System.out.println("step: " + step);
         JLabel stepCount = new JLabel("step: " + step);
@@ -139,6 +151,9 @@ public class gameJFrame extends JFrame implements KeyListener, ActionListener {
         if (victory()) {
             return;
         }
+        if(nosolution()){
+            return;
+        }
         int code = e.getKeyCode();
         if (code == 37) {
             if (y == 3) {
@@ -196,6 +211,16 @@ public class gameJFrame extends JFrame implements KeyListener, ActionListener {
         for (int i = 0; i < data.length; i++) {
             for (int j = 0; j < data.length; j++) {
                 if (data[i][j] != win[i][j]) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    public boolean nosolution() {
+        for (int i = 0; i < data.length; i++) {
+            for (int j = 0; j < data.length; j++) {
+                if (data[i][j] != type[i][j]) {
                     return false;
                 }
             }
